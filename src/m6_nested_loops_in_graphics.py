@@ -3,8 +3,8 @@ This project demonstrates NESTED LOOPS (i.e., loops within loops)
 in the context of TWO-DIMENSIONAL GRAPHICS.
 
 Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         their colleagues and William Kocar.
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
@@ -55,6 +55,36 @@ def run_test_draw_L():
 
 
 def draw_L(window, circle, r, c):
+    original_x = circle.center.x
+    original_y = circle.center.y
+    radius = circle.radius
+
+    x = original_x
+    y = original_y
+    for i in range(r):  # Loop through the rows
+        for j in range(3):  # Loop through the columns
+            new_circle = rg.Circle(rg.Point(x, y), radius)
+            new_circle.attach_to(window)
+            window.render(0.1)
+
+            x = x + (2 * radius)  # Move x to the right, for next circle
+
+        y = y + 2 * radius  # Move y down, for the next row of circles
+        x = original_x  # Reset x to the left-edge, for the next row
+
+    y = y -(3*(2*radius))
+    x = x +(3*(2*radius))
+    original_x = x
+    for i in range(3):  # Loop through the rows
+        for j in range(c):  # Loop through the columns
+            new_circle = rg.Circle(rg.Point(x, y), radius)
+            new_circle.attach_to(window)
+            window.render(0.1)
+
+            x = x + (2 * radius)  # Move x to the right, for next circle
+
+        y = y + 2 * radius  # Move y down, for the next row of circles
+        x = original_x  # Reset x to the left-edge, for the next row
     """
     See   L.pdf   in this project for pictures that may
     help you better understand the following specification:
@@ -80,7 +110,7 @@ def draw_L(window, circle, r, c):
     and m and n are small, positive integers.
     """
     # ------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # Done: 2. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
 
@@ -103,6 +133,31 @@ def run_test_draw_wall_on_right():
 
 
 def draw_wall_on_right(rectangle, n, window):
+    original_x1 = rectangle.corner_1.x
+    original_y1 = rectangle.corner_1.y
+    original_x2 = rectangle.corner_2.x
+    original_y2 = rectangle.corner_2.y
+
+    x1 = original_x1
+    y1 = original_y1
+    x2 = original_x2
+    y2 = original_y2
+    width = original_x2 - original_x1
+    height = original_y2 - original_y1
+    for j in range(n):  # Loop through the rows
+        for _ in range(j + 1):  # Loop through the columns
+            new_rectangle = rg.Rectangle(rg.Point(x1, y1), rg.Point(x2,y2))
+            new_rectangle.attach_to(window.initial_canvas)
+            window.render(0.1)
+
+            x1 = x1 - width# Move x to the right, for next circle
+            x2 = x2 - width
+
+        y1 = y1 + height
+        y2 = y2 + height
+        x1 = original_x1 # Reset x to the left-edge, for the next row
+        x2 = original_x2
+
     """
     See   Walls.pdf   in this project for pictures that may
     help you better understand the following specification:
@@ -121,7 +176,7 @@ def draw_wall_on_right(rectangle, n, window):
     and n is a small, positive integer.
     """
     # ------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # Done: 3. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
 
